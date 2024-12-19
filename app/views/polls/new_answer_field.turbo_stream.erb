@@ -1,0 +1,7 @@
+<%= turbo_stream.append "answers" do %>
+  <%= form_with(model: @poll, local: true) do |f| %>
+    <%= f.fields_for :answers, @answer do |af| %>
+      <%= render "answers/answer_fields", f: af %>
+    <% end %>
+  <% end %>
+<% end %>

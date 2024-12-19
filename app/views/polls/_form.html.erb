@@ -1,0 +1,33 @@
+<%= form_with(model: poll, local: true) do |f| %>
+  <div class="mb-3">
+    <%= f.label :question %>
+    <%= f.text_field :question, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :is_published, "Published?" %>
+    <%= f.check_box :is_published %>
+    <small class="form-text text-muted">
+      If checked, the poll is published and can be voted on.
+    </small>
+  </div>
+
+  <h3>Answers</h3>
+
+  <!-- If using Turbo for dynamic fields: -->
+  <turbo-frame id="answers">
+    <% poll.answers.build if poll.answers.blank? %>
+    <% f.fields_for :answers do |af| %>
+      <%= render "answers/answer_fields", af: af %>
+    <% end %>
+  </turbo-frame>
+
+  <div class="mb-3">
+    <!-- For Turbo Streams approach -->
+    <%= link_to "Add another answer", new_answer_field_polls_path, data: { turbo_frame: "answers" }, class: "btn btn-secondary" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.submit poll.persisted? ? "Update Poll" : "Create Poll", class: "btn btn-success" %>
+  </div>
+<% end %>

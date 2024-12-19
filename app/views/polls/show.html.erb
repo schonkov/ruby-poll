@@ -1,0 +1,30 @@
+<h1><%= @poll.question %></h1>
+
+<% if !@poll.is_published? %>
+  <p>This poll is currently a closed and cannot be voted on.</p>
+  <% if user_signed_in? && current_user.admin? %>
+    <%= button_to "Publish Poll", publish_poll_path(@poll), method: :patch, class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <p>This poll is published and open for voting!</p>
+  <% if user_signed_in? && current_user.admin? %>
+    <%= button_to "Close the Poll", close_poll_path(@poll), method: :patch, class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+<% if user_signed_in? && current_user.admin? %>
+  <%= link_to "Edit Poll", edit_poll_path(@poll), class: "btn btn-warning" %>
+  <%= link_to "Delete Poll", poll_path(@poll), data: { confirm: "Are you sure?", turbo_method: :delete  }, class: "btn btn-danger" %>
+<% end %>
+
+
+<ul class="list-group">
+  <% @answers.each do |answer| %>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span><%= answer.text %></span>
+      <% unless !@poll.is_published || @user_voted %>
+        <%= link_to "Vote", poll_answer_votes_path(@poll, answer), data: { turbo_method: :post }, class: "btn btn-primary btn-sm" %>
+      <% end %>
+      <span class="badge bg-secondary rounded-pill"><%= answer.votes.count %> votes</span>
+    </li>
+  <% end %>
+</ul>
