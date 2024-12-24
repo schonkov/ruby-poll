@@ -27,7 +27,7 @@ class PollsController < ApplicationController
     end
   end
 
-  # Admin could edit poll if needed
+  # handled in update
   def edit
     #edit view;
   end
@@ -58,16 +58,6 @@ class PollsController < ApplicationController
       redirect_to @poll, notice: "Poll has been closed!"
     else
       redirect_to @poll, alert: "Failed to close the poll."
-    end
-  end
-
-  def new_answer_field
-    # Create a new Answer object in memory (not saved)
-    @poll = Poll.new
-    @answer = @poll.answers.build
-
-    respond_to do |format|
-      format.turbo_stream
     end
   end
 

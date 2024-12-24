@@ -1,9 +1,0 @@
-<div class="mb-3 answer-field">
-  <%= af.label :text, "Answer" %>
-  <%= af.text_field :text, class: "form-control" %>
-  <%# Optionally a remove checkbox if editing existing answers %>
-  <% if af.object.persisted? %>
-    <%= af.check_box :_destroy %>
-    <%= af.label :_destroy, "Remove this answer" %>
-  <% end %>
-</div>

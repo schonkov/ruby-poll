@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en" data-bs-theme="dark">
+
+<head>
     <title><%= content_for(:title) || "Poll App" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,33 +21,93 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  </head>
-  <body class="p-3">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <a class="navbar-brand" href="<%= root_path %>">PollApp</a>
-    <ul class="navbar-nav mr-auto">
-      <% if user_signed_in? %>
-        <li > <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link" %>
-        </li>
-        <% if current_user.admin? %>
-          <li class="nav-item"><%= link_to "New Poll", new_poll_path, class: "nav-link" %></li>
-        <% end %>
-      <% else %>
-        <li class="nav-item"><%= link_to "Sign in", new_user_session_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to "Sign up", new_user_registration_path, class: "nav-link" %></li>
-      <% end %>
-    </ul>
-  </nav>
 
-  <div class="container">
-    <% if notice %>
-      <div class="alert alert-success"><%= notice %></div>
-    <% end %>
-    <% if alert %>
-      <div class="alert alert-danger"><%= alert %></div>
-    <% end %>
-    <%= yield %>
+    <script src="https://kit.fontawesome.com/3ef13bda05.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="wrapper">
+<!--  <aside id="sidebar" class="js-sidebar">-->
+    <aside id="sidebar" class="js-sidebar" data-layout-target="sidebar">
+
+    <div class="h-100">
+      <div class="sidebar-logo">
+        <a class="navbar-brand" href="<%= root_path %>">Poll Web App</a>
+      </div>
+
+      <ul class="sidebar-nav">
+
+        <li class="sidebar-item">
+          <%= link_to '<i class="fa-solid fa-file-lines pe-2"></i> Dashboard'.html_safe, polls_path, class: "sidebar-link navbar-brand" %>
+        </li>
+
+        <% if user_signed_in? %>
+          <% if current_user.admin? %>
+            <li class="sidebar-item">
+              <%= link_to '<i class="fa-solid fa-plus pe-2"></i> New Poll'.html_safe, new_poll_path, class: "sidebar-link navbar-brand" %>
+            </li>
+          <% end %>
+
+          <li class="sidebar-item">
+            <%= link_to '<i class="fa-solid fa-sign-out-alt pe-2"></i> Sign out'.html_safe, destroy_user_session_path, data: { turbo_method: :delete }, class: "sidebar-link navbar-brand text-danger" %>
+          </li>
+        <% else %>
+          <li class="sidebar-item">
+            <%= link_to '<i class="fa-solid fa-sign-in-alt pe-2"></i> Sign in'.html_safe, new_user_session_path, class: "sidebar-link navbar-brand" %>
+          </li>
+
+          <li class="sidebar-item">
+            <%= link_to '<i class="fa-solid fa-user-plus pe-2"></i> Sign up'.html_safe, new_user_registration_path, class: "sidebar-link navbar-brand" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </aside>
+  <div class="main">
+    <nav class="navbar navbar-expand px-3 border-bottom">
+<!--      <button class="btn" id="sidebar-toggle" type="button">-->
+<!--        <span class="navbar-toggler-icon"></span>-->
+<!--      </button>-->
+      <!-- Sidebar Toggle Button -->
+      <button class="btn" id="sidebar-toggle"
+              data-controller="layout"
+              data-action="click->layout#toggleSidebar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse navbar">
+
+      </div>
+    </nav>
+    <main class="content px-3 py-2">
+        <div class="container">
+          <% if notice %>
+            <div class="alert alert-success"><%= notice %></div>
+          <% end %>
+          <% if alert %>
+            <div class="alert alert-danger"><%= alert %></div>
+          <% end %>
+          <%= yield %>
+        </div>
+    </main>
+<!--    <a href="#" class="theme-toggle">-->
+<!--      <i class="fa-regular fa-moon"></i>-->
+<!--      <i class="fa-regular fa-sun"></i>-->
+<!--    </a>-->
+
+    <!-- Theme Toggle Button -->
+    <button class="btn btn-secondary theme-toggle"
+            data-controller="layout"
+            data-layout-target="themeToggle"
+            data-action="click->layout#toggleTheme">
+      Toggle Theme
+      <i class="fa-regular fa-moon"></i>
+    </button>
+
   </div>
-  </body>
+</div>
+
+</body>
+
 </html>

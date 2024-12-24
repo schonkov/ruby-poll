@@ -30,23 +30,31 @@ user = User.create!(
 )
 
 # Create Polls with Answers
-poll1 = Poll.create!(question: "What is your favorite cuisine?")
+poll1 = Poll.create!(question: "What is your favorite cuisine?", is_published: true)
 poll1.answers.create!(text: "Italian")
+poll1.answers.create!(text: "Bulgarian")
 poll1.answers.create!(text: "Mexican")
 poll1.answers.create!(text: "Japanese")
 poll1.answers.create!(text: "Indian")
 
-poll2 = Poll.create!(question: "Which programming language do you prefer?")
+poll2 = Poll.create!(question: "Which programming language do you prefer?", is_published: false)
 poll2.answers.create!(text: "Ruby")
 poll2.answers.create!(text: "JavaScript")
 poll2.answers.create!(text: "Python")
 poll2.answers.create!(text: "Go")
+poll2.answers.create!(text: "PHP")
+poll2.answers.create!(text: "C#")
+poll2.answers.create!(text: "Java")
 
-poll3 = Poll.create!(question: "What's your preferred vacation type?")
+poll3 = Poll.create!(question: "What's your preferred vacation type?", is_published: true)
 poll3.answers.create!(text: "Beach")
 poll3.answers.create!(text: "Mountains")
 poll3.answers.create!(text: "City")
 poll3.answers.create!(text: "Countryside")
+poll3.answers.create!(text: "Home")
+
+poll4 = Poll.create!(question: "What is your favorite color?", is_published: true)
+poll.answers.create!([{ text: "Red" }, { text: "Blue" }, { text: "Green" }])
 
 puts "Seeding completed successfully!"
 

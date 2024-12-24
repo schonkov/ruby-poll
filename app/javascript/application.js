@@ -1,31 +1,35 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
-
-document.addEventListener("DOMContentLoaded", () => {
-    const addAnswerButton = document.getElementById("add-answer");
-    const answersFields = document.getElementById("answers-fields");
-    const template = document.getElementById("answer-template");
-
-    console.log("addAnswerButton:", addAnswerButton);
-    console.log("answersFields:", answersFields);
-    console.log("template:", template);
-
-    if (!answersFields) {
-        console.error("answers-fields element not found!");
-        return;
-    }
-
-    let index = answersFields.querySelectorAll('.answer-field').length;
-
-    addAnswerButton.addEventListener("click", () => {
-        const clone = template.content.cloneNode(true);
-        const input = clone.querySelector('.answer-input');
-
-        input.setAttribute('name', `poll[answers_attributes][${index}][text]`);
-        answersFields.appendChild(clone);
-
-        index++;
-    });
+//
+const sidebarToggle = document.querySelector("#sidebar-toggle");
+sidebarToggle.addEventListener("click",function(){
+    document.querySelector("#sidebar").classList.toggle("collapsed");
+});
+console.log("Application js www");
+document.querySelector(".theme-toggle").addEventListener("click",() => {
+    toggleLocalStorage();
+    toggleRootClass();
 });
 
+function toggleRootClass(){
+    const current = document.documentElement.getAttribute('data-bs-theme');
+    const inverted = current == 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-bs-theme',inverted);
+}
+
+function toggleLocalStorage(){
+    if(isLight()){
+        localStorage.removeItem("light");
+    }else{
+        localStorage.setItem("light","set");
+    }
+}
+
+function isLight(){
+    return localStorage.getItem("light");
+}
+
+if(isLight()){
+    toggleRootClass();
+}

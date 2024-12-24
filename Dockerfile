@@ -1,4 +1,4 @@
-# Dockerfile.dev - for development
+# Dockerfile - for development
 FROM ruby:3.3.6-slim
 
 WORKDIR /app
@@ -18,7 +18,6 @@ COPY . .
 # Precompile bootsnap (optional)
 RUN bundle exec bootsnap precompile --gemfile
 
-# In development, we won't precompile assets or enforce production settings.
 # Expose port 3000 for Rails dev server
 EXPOSE 3000
 
