@@ -54,7 +54,7 @@ poll3.answers.create!(text: "Countryside")
 poll3.answers.create!(text: "Home")
 
 poll4 = Poll.create!(question: "What is your favorite color?", is_published: true)
-poll.answers.create!([{ text: "Red" }, { text: "Blue" }, { text: "Green" }])
+poll4.answers.create!([{ text: "Red" }, { text: "Blue" }, { text: "Green" }])
 
 puts "Seeding completed successfully!"
 
