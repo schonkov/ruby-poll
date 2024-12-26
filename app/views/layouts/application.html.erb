@@ -1,3 +1,4 @@
+<!--app/views/layouts/application.html.erb-->
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 
@@ -27,11 +28,10 @@
 </head>
 
 <body>
-<div class="wrapper">
-<!--  <aside id="sidebar" class="js-sidebar">-->
+<div class="wrapper" data-controller="layout">
     <aside id="sidebar" class="js-sidebar" data-layout-target="sidebar">
 
-    <div class="h-100">
+      <div class="h-100">
       <div class="sidebar-logo">
         <a class="navbar-brand" href="<%= root_path %>">Poll Web App</a>
       </div>
@@ -66,12 +66,7 @@
   </aside>
   <div class="main">
     <nav class="navbar navbar-expand px-3 border-bottom">
-<!--      <button class="btn" id="sidebar-toggle" type="button">-->
-<!--        <span class="navbar-toggler-icon"></span>-->
-<!--      </button>-->
-      <!-- Sidebar Toggle Button -->
       <button class="btn" id="sidebar-toggle"
-              data-controller="layout"
               data-action="click->layout#toggleSidebar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -98,12 +93,11 @@
 
     <!-- Theme Toggle Button -->
     <button class="btn btn-secondary theme-toggle"
-            data-controller="layout"
-            data-layout-target="themeToggle"
             data-action="click->layout#toggleTheme">
       Toggle Theme
       <i class="fa-regular fa-moon"></i>
     </button>
+
 
   </div>
 </div>

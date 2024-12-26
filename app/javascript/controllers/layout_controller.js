@@ -1,58 +1,59 @@
-// app/javascript/controllers/layout_controller.js
-
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["sidebar", "themeToggle"]
+  static targets = ["sidebar"]
 
   connect() {
-    console.log("AAAA");
-    console.log("Hello from Layout Controller!"); // Debugging message
-    // Check localStorage for sidebar state
-    if (localStorage.getItem("sidebar-collapsed")) {
-        this.sidebarTarget.classList.add("collapsed")
-    }
+    console.log("Layout controller connected!");
+    console.log("Sidebar target:", this.hasSidebarTarget);
 
-    // Check for theme preference
-    if (this.isLightTheme()) {
-      this.toggleThemeClass()
+    if (this.hasSidebarTarget) {
+      console.log("Sidebar target found!", this.sidebarTarget);
+
+      if (localStorage.getItem("sidebar-collapsed")) {
+        this.sidebarTarget.classList.add("collapsed");
+      }
+    } else {
+      console.error("Sidebar target not found!");
     }
   }
 
-  // Toggle sidebar visibility
   toggleSidebar() {
-    const sidebar = this.sidebarTarget
-    sidebar.classList.toggle("collapsed")
+    console.log("Toggle sidebar clicked");
 
-    // Save state in localStorage
-    if (sidebar.classList.contains("collapsed")) {
-      localStorage.setItem("sidebar-collapsed", "true")
+    if (this.hasSidebarTarget) {
+      this.sidebarTarget.classList.toggle("collapsed");
+
+      if (this.sidebarTarget.classList.contains("collapsed")) {
+        localStorage.setItem("sidebar-collapsed", "true");
+      } else {
+        localStorage.removeItem("sidebar-collapsed");
+      }
     } else {
-      localStorage.removeItem("sidebar-collapsed")
+      console.error("Sidebar target missing when toggling!");
     }
   }
 
-  // Toggle theme between dark and light
   toggleTheme() {
-    this.toggleLocalStorage()
-    this.toggleThemeClass()
+    console.log("Toggle theme clicked");
+
+    const htmlElement = document.documentElement;
+    const currentTheme = htmlElement.getAttribute("data-bs-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    htmlElement.setAttribute("data-bs-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+
   }
 
-  toggleThemeClass() {
-    const current = document.documentElement.getAttribute('data-bs-theme')
-    const inverted = current === 'dark' ? 'light' : 'dark'
-    document.documentElement.setAttribute('data-bs-theme', inverted)
-  }
+  applyTheme() {
+    const savedTheme = localStorage.getItem("theme") || "dark";
 
-  toggleLocalStorage() {
-    if (this.isLightTheme()) {
-      localStorage.removeItem("light")
-    } else {
-      localStorage.setItem("light", "set")
+    document.documentElement.setAttribute("data-bs-theme", savedTheme);
+
+    if (this.hasSidebarTarget) {
+      this.sidebarTarget.setAttribute("data-bs-theme", savedTheme);
     }
-  }
 
-  isLightTheme() {
-    return localStorage.getItem("light")
   }
 }

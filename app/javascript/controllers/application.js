@@ -7,5 +7,5 @@ const application = Application.start()
 application.debug = true
 window.Stimulus = application
 
-console.log("Hello from Application.js!"); // Debugging message
+// console.log("Hello from Application.js!");
 export { application }

@@ -1,4 +1,5 @@
-version: '3.9'
+version: "3.9"
+
 services:
   web:
     build:
@@ -8,7 +9,10 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
+      - bundle:/usr/local/bundle
     environment:
       RAILS_ENV: development
-    # command: ["bin/rails", "server", "-b", "0.0.0.0"]
-    # The command can also be set in the Dockerfile, or here.
+#    command: ["bin/rails", "server", "-b", "0.0.0.0"]
+
+volumes:
+  bundle:

@@ -1,12 +1,15 @@
-# Dockerfile - for development
+# Dockerfile
 FROM ruby:3.3.6-slim
 
 WORKDIR /app
 
 # Install dependencies
-RUN apt-get update -qq && \
-    apt-get install -y build-essential libvips sqlite3 && \
+RUN apt-get update -qq  \
+    && \
+    apt-get install -y build-essential libvips sqlite3 git nodejs npm && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+RUN gem install bundler
 
 # Cache bundle installs
 COPY Gemfile Gemfile.lock ./
