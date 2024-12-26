@@ -16,23 +16,16 @@ The app is containerized using Docker and can be easily deployed and run with Do
 
 1. Clone the repository
 
-git clone https://github.com/schonkov/ruby-poll.git
+`git clone https://github.com/schonkov/ruby-poll.git`
 
-cd ruby-poll/
+`cd ruby-poll/`
 
-2. Build the Docker Image
+2. Build the Docker Image, (DB Create, Migrate and Seed) and Start the Application
 
-docker-compose build
+`docker-compose up
+`
 
-3. Create, Migrate, and Seed the Database
-
-docker-compose run web bundle exec rails db:create db:migrate db:seed
-
-4. Start the Application
-
-docker-compose up
-
-5. Access the Application
+3. Access the Application
 Open your browser and go to:
 
 http://localhost:3000
