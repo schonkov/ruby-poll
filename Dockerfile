@@ -1,3 +1,4 @@
+#Dockerfile
 # Base image
 FROM ruby:3.3.6-slim
 
@@ -27,3 +28,4 @@ EXPOSE 3000
 
 # Start Rails server
 CMD ["bin/rails", "server", "-b", "0.0.0.0"]
+#CMD: ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
